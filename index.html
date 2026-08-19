@@ -18,6 +18,11 @@
             color: #1d1d1f;
             line-height: 1.6;
         }
+        /* 苹果标准缓动函数 */
+        :root {
+            --apple‑ease: cubic‑bezier(0.25, 0.1, 0.25, 1);
+        }
+
         /* 导航栏 苹果风格 */
         nav {
             display: flex;
@@ -27,6 +32,7 @@
             background: #f5f5f7;
             position: sticky;
             top:0;
+            z-index: 99;
         }
         .logo {
             font-size:22px;
@@ -42,11 +48,28 @@
             text-decoration:none;
             color:#1d1d1f;
             font-size:15px;
+            position: relative;
+        }
+        /* 导航下划线动画 */
+        .nav-links a::after {
+            content:"";
+            position:absolute;
+            left:0;
+            bottom:-4px;
+            width:0%;
+            height:2px;
+            background:#1d1d1f;
+            transition: width 0.28s var(--apple‑ease);
+        }
+        .nav-links a:hover::after {
+            width:100%;
         }
         /* 购物车小图标按钮 */
         .cart-btn{
             cursor:pointer;
             font-size:16px;
+            background:transparent;
+            border:none;
         }
         /* 大Banner */
         .hero {
@@ -77,9 +100,14 @@
             border-radius:22px;
             font-size:17px;
             cursor:pointer;
+            transition: all 0.26s var(--apple‑ease);
         }
         .btn:hover {
             background:#0077ed;
+            transform: scale(1.03);
+        }
+        .btn:active {
+            transform: scale(0.97);
         }
         /* 产品区块 */
         .products-section {
@@ -97,7 +125,17 @@
         }
         .product-card {
             text-align:center;
+            border-radius:14px;
+            overflow:hidden;
+            transition: all 0.34s var(--apple‑ease);
+            transform: translateY(0) scale(1);
         }
+        /* 卡片悬浮：上浮+放大+柔和阴影（苹果lift悬浮效果） */
+        .product-card:hover {
+            transform: translateY(-10px) scale(1.025);
+            box-shadow: 0 16px 32px rgba(0,0,0,0.12);
+        }
+        /* 图片容器：内部图片hover放大 */
         .product-img {
             width:100%;
             height:340px;
@@ -107,6 +145,16 @@
             display:flex;
             align-items:center;
             justify-content:center;
+            overflow:hidden;
+        }
+        .product-img > img {
+            width:100%;
+            height:100%;
+            object-fit:cover;
+            transition: transform 0.45s var(--apple‑ease);
+        }
+        .product-card:hover .product-img > img {
+            transform: scale(1.07); /* 图片内部缓缓放大 */
         }
         .product-card h3 {
             font-size:20px;
@@ -125,6 +173,14 @@
             background:transparent;
             border-radius:20px;
             cursor:pointer;
+            transition: all 0.24s var(--apple‑ease);
+        }
+        .add-cart:hover{
+            background:#0071e3;
+            color:white;
+        }
+        .add-cart:active{
+            transform:scale(0.96);
         }
         /* 页脚 */
         footer {
@@ -146,6 +202,17 @@
             color:#86868b;
             text-decoration:none;
         }
+
+        /* =========滚动入场动画 苹果官网核心效果========= */
+        .fade‑in‑up {
+            opacity: 0;
+            transform: translateY(36px);
+            transition: opacity 0.7s var(--apple‑ease), transform 0.7s var(--apple‑ease);
+        }
+        .fade‑in‑up.visible {
+            opacity:1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body>
@@ -161,22 +228,21 @@
             <button class="snipcart-checkout cart-btn">Cart (<span class="snipcart-items-count">0</span>)</button>
         </div>
     </nav>
-
     <!-- 首页大Banner -->
-    <section class="hero">
+    <section class="hero fade‑in‑up">
         <h1>Lab‑Grown Diamonds</h1>
         <p>Premium, Ethical & Affordable</p>
         <button class="btn">Shop Now</button>
     </section>
-
     <!-- 产品列表区 -->
-    <section class="products-section">
+    <section class="products-section fade‑in‑up">
         <h2 class="section-title">Our Collection</h2>
         <div class="product-grid">
             <!-- 产品1 【Snipcart真实加购按钮】 -->
-            <div class="product-card">
+            <div class="product-card fade‑in‑up">
                 <div class="product-img">
-                    <span>Product Image</span>
+                    <!-- 以后把图片链接填进src，替换这里 -->
+                    <img src="" alt="Round Brilliant Ring">
                 </div>
                 <h3>Round Brilliant Ring</h3>
                 <div class="price">MYR 1299</div>
@@ -191,9 +257,9 @@
                 </button>
             </div>
             <!-- 产品2 -->
-            <div class="product-card">
+            <div class="product-card fade‑in‑up">
                 <div class="product-img">
-                    <span>Product Image</span>
+                    <img src="" alt="Pendant Necklace">
                 </div>
                 <h3>Pendant Necklace</h3>
                 <div class="price">MYR 899</div>
@@ -208,9 +274,9 @@
                 </button>
             </div>
             <!-- 产品3 -->
-            <div class="product-card">
+            <div class="product-card fade‑in‑up">
                 <div class="product-img">
-                    <span>Product Image</span>
+                    <img src="" alt="Solitaire Earrings">
                 </div>
                 <h3>Solitaire Earrings</h3>
                 <div class="price">MYR 1099</div>
@@ -226,9 +292,8 @@
             </div>
         </div>
     </section>
-
     <!-- 页脚 -->
-    <footer>
+    <footer class="fade‑in‑up">
         <div class="footer-wrap">
             <div class="footer-links">
                 <a href="#">Terms</a>
@@ -239,6 +304,18 @@
             <p>© 2026 GEMPOP. All rights reserved.</p>
         </div>
     </footer>
+
+    <!-- 滚动检测JS：实现页面向下滚动元素淡入上滑，原生JS，无第三方库 -->
+    <script>
+        const io = new IntersectionObserver((entries)=>{
+            entries.forEach(item=>{
+                if(item.isIntersecting){
+                    item.target.classList.add('visible');
+                }
+            })
+        },{threshold:0.12});
+        document.querySelectorAll('.fade‑in‑up').forEach(el=>io.observe(el));
+    </script>
 
     <!-- 👇这里替换成你自己的Snipcart公开API Key -->
     <script async src="https://cdn.snipcart.com/themes/v3.3.0/default/snipcart.js"></script>
