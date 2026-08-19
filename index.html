@@ -100,7 +100,7 @@
 async function loadProducts(){
   const gridDom = document.getElementById("productGrid");
   try{
-    const res = await fetch("https://aura-db-api.xxxx.workers.dev");
+    const res = await fetch("https://auradbapi.1205638884.workers.dev/");
     const productList = await res.json();
     if(!Array.isArray(productList) || productList.length===0){
       gridDom.innerHTML = `<p style="text-align:center;width:100%;padding:60px 0;color:#86868b;font-size:16px;">No products available</p>`;
