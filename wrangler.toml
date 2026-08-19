@@ -1,0 +1,6 @@
+name = "aura"
+compatibility_date = "2026-08-19"
+[[d1_databases]]
+binding = "D1_DB"
+database_name = "aura_products"
+database_id = "这里填你D1数据库的ID，在D1数据库概览页复制"
