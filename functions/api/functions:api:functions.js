@@ -3,9 +3,9 @@ export async function onRequestGet(context) {
   try {
     const result = await env.D1_DB.prepare("SELECT * FROM products").all();
     return new Response(JSON.stringify(result.results), {
-      headers: { "Content-Type": "application/json" }
+      headers: { "Content‑Type": "application/json" }
     });
   } catch (err) {
-    return new Response(JSON.stringify({error: err.message}), { status:500 });
+    return new Response(JSON.stringify({ error: err.message }), { status: 500 });
   }
 }
